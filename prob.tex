@@ -1,0 +1,461 @@
+\documentclass[12pt]{scrartcl}
+% \documentclass[12pt]{article}
+% \usepackage[v1]{subfiles} %%
+
+\usepackage[utf8]{inputenc}
+% \usepackage[croatian]{babel}
+\usepackage{datetime}
+\usepackage[a4paper,margin=0.75in]{geometry}
+\setlength\baselineskip{15pt}
+
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{csquotes}
+\usepackage{tikz}
+\usepackage{arydshln}
+\pagenumbering{gobble}
+\usepackage{float}
+\usepackage[dvipsnames]{xcolor}
+%\usepackage{mathptmx} % times new roman
+% \usepackage{mathpazo} % tex gyre pagella
+% \usepackage{baskervaldx}
+% \usepackage[baskervaldx]{newtxmath}
+% \usepackage[T1]{fontenc}
+% \fontseries{ub}\selectfont
+
+\usepackage{breqn}
+\usepackage{thmtools}
+\usepackage{multirow}
+\usepackage{mathtools}
+\usepackage[unicode]{hyperref}
+
+\usepackage{booktabs}
+\usepackage{listings}
+
+%%%
+
+% Save original macros
+% --------------------
+\usepackage{letltxmacro}
+
+\LetLtxMacro\OriginalLongrightarrow\Longrightarrow
+\LetLtxMacro\OriginalLongleftarrow\Longleftarrow
+
+% Implement new macros
+% --------------------
+\usepackage{trimclip}
+\DeclareRobustCommand\Longrightarrow{\NewRelbar\joinrel\Rightarrow}
+\DeclareRobustCommand\Longleftarrow{\Leftarrow\joinrel\NewRelbar}
+
+\makeatletter
+\DeclareRobustCommand\NewRelbar{%
+  \mathrel{%
+    \mathpalette\@NewRelbar{}%
+  }%
+}
+\newcommand*\@NewRelbar[2]{%
+  % #1: math style
+  % #2: unused
+  \sbox0{$#1=$}%
+  \sbox2{$#1\Rightarrow\m@th$}%
+  \sbox4{$#1\Leftarrow\m@th$}%
+  \clipbox{0pt 0pt \dimexpr(\wd2-.6\wd0) 0pt}{\copy2}%
+  \kern-.2\wd0 %
+  \clipbox{\dimexpr(\wd4-.6\wd0) 0pt 0pt 0pt}{\copy4}%
+}
+\makeatother
+%%%
+
+
+\definecolor{seagreen}{HTML}{21b2aa}
+\definecolor{magenta}{HTML}{b2217f}
+\definecolor{gold}{HTML}{ca9520}
+\definecolor{red}{HTML}{da272f}
+\definecolor{blue}{HTML}{4682b4}
+\definecolor{navy}{HTML}{7b000b} %% orig 06038d % onda 7b0000 % onda 7b000b
+\definecolor{nred}{HTML}{650015}
+\definecolor{ngreen}{HTML}{156515}
+
+%% 
+\definecolor{highlightcolor}{named}{ngreen}
+\addtokomafont{disposition}{\color{highlightcolor}}
+\renewcommand{\emph}[1]{\textbf{\textcolor{highlightcolor}{#1}}}
+%%
+
+\definecolor{codebg}{HTML}{f0f0f0}
+\definecolor{commentfg}{HTML}{333333}
+
+\lstdefinestyle{mystyle}{
+	backgroundcolor=\color{codebg},
+	commentstyle=\color{commentfg},
+	keywordstyle=\color{navy},
+	stringstyle=\color{commentfg},
+	basicstyle=\ttfamily\footnotesize,
+	breakatwhitespace=false,
+	breaklines=true,
+	captionpos=b,
+	keepspaces=true,
+	numbers=none,
+	showspaces=false,
+	showstringspaces=false,
+	showtabs=false,
+	tabsize=2
+}
+\lstset{style=mystyle}
+
+\hypersetup{
+    colorlinks,
+    linkcolor=highlightcolor,
+    citecolor=highlightcolor,
+    urlcolor=highlightcolor
+}
+
+\usepackage{enumitem}
+\makeatletter
+\providecommand*{\blx@noerroretextools}{}
+\makeatother
+
+\usepackage[
+%	style=alphabetic,
+	style=numeric,
+	giveninits
+	% firstinits=true,
+	% terseinits=true,
+	% giveninits=true
+]{biblatex}
+\addbibresource{literatura.bib}
+\let\oldcite\cite
+\renewcommand{\cite}[2][]{%
+    \def\tmp{#1}%
+    \ifx\tmp\empty
+        \mbox{\oldcite{#2}}%
+    \else
+        \mbox{\oldcite[\tmp]{#2}}%
+    \fi
+}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.15}
+\usepackage{mathrsfs}
+\usetikzlibrary{arrows}
+	
+\usepackage[section]{placeins}
+\declaretheorem{teorem}
+\numberwithin{teorem}{subsection}
+\numberwithin{equation}{section}
+\numberwithin{figure}{section}
+\numberwithin{table}{section}
+\declaretheorem[sibling=teorem, style=plain]{lemma}
+\declaretheorem[style=remark, sibling=teorem]{note}
+%\declaretheorem[style=remark, sibling=teorem]{komentar*}
+\declaretheorem[style=definition, sibling=teorem]{definition}
+\declaretheorem[sibling=teorem]{corollary}
+% \declaretheorem[style=remark, sibling=teorem]{zadatak}
+\declaretheorem[sibling=teorem]{proposition}
+\declaretheorem[sibling=teorem]{example}
+\declaretheorem[sibling=teorem]{problem}
+\declaretheorem[sibling=teorem]{exercise}
+
+\newcommand{\ub}{\rightarrow \infty}
+\newcommand{\un}{\rightarrow 0}
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert} 
+% \newcommand{\given}{\, \middle\vert \,}
+\newcommand{\given}{\, \vert \,}
+\newcommand{\st}{\, \colon \,}
+\newcommand{\D}{\,\mathrm d}
+\newcommand{\ani}{{^\perp}}
+\newcommand{\ran}{\mathrm{ran}\,}
+\newcommand{\bop}{\mathrm{B}}
+\newcommand{\skp}[2]{\left\langle {#1}, {#2}  \right\rangle}
+\newcommand{\jpod}{\stackrel{\mathrm d}{=}}
+\newcommand{\jgs}{\stackrel{\mathrm{g.s.}}{=\joinrel=}}
+%\newcommand{\jzbog}[1]{\stackrel{\eqref{#1}}{=}}
+\newcommand{\stackrell}[2]{\stackrel{\scriptstyle {#1}}{#2}}
+\newcommand{\konvp}{\stackrel{\mathbb P}{\longrightarrow}}
+\newcommand{\konvw}{\stackrel{\mathrm w}{\longrightarrow}}
+\newcommand{\konvd}{\stackrel{\mathrm d}{\longrightarrow}}
+\newcommand{\konvgs}{\stackrel{\mathrm{g.s.}}{\longrightarrow}}
+\DeclareMathOperator{\card}{card}
+\DeclareMathOperator{\var}{Var}
+\DeclareMathOperator{\supp}{supp}
+\DeclareMathOperator{\im}{im}
+\DeclareMathOperator{\olspan}{\overline{span}}
+\DeclareMathOperator{\tg}{tg}
+\DeclareMathOperator{\ctg}{ctg}
+\DeclareMathOperator{\arctg}{arctg}
+\DeclareMathOperator{\Arsh}{Arsh}
+% \DeclareMathOperator{\ln}{\ln}
+
+\newcommand{\ol}[1]{\overline{#1}}
+\newcommand{\wh}[1]{\widehat{#1}}
+\newcommand{\wt}[1]{\widetilde{#1}}
+\renewcommand{\th}[1]{\hat{#1}} % drukciji hat za tekst?
+% \newcommand{\eqdef}{\ {=\colon} \ } 
+% \newcommand{\defeq}{\ {\colon\!=} \ }
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\C}{\mathbb{C}}
+\renewcommand{\P}{\mathbb{P}}
+\newcommand{\Ptrans}{\P}  % trazicijska funkcija Markovljevog procesa
+\newcommand{\E}{\mathbb{E}}
+\def\B{\mathrm{B}}
+\def\K{\mathrm{K}}
+\def\M{\mathrm{M}}
+\def\CC{\mathrm{C}}
+\def\RR{\mathrm{R}}
+\def\H{\mathcal{H}}
+\def\K{\mathcal{K}}
+% \def\Z{\mathcal{Z}}
+\def\S{\mathcal{S}}
+\def\T{\mathcal{T}}
+\def\U{\mathcal{U}}
+
+\newcommand{\cz}{Calder\' on--Zygmund}
+\newcommand{\holder}{H\" older}
+\newcommand{\cadlag}{c\` adl\` ag}
+\newcommand{\levy}{L\' evy}
+\newcommand{\ito}{It\= o}
+\newcommand{\dnorm}{\norm{\, \cdot \,}}
+\def\L{\mathrm{L}}
+\def\w{\mathrm{w}}
+
+%%
+\newcommand{\oo}[1]{\left\langle {#1} \right\rangle}
+\newcommand{\oc}[1]{\left\langle {#1} \right]}
+\newcommand{\co}[1]{\left[ {#1} \right\rangle}
+\newcommand{\cc}[1]{\left[ {#1} \right]}
+
+\newcommand{\ob}[1]{\left( {#1} \right)}
+\newcommand{\ug}[1]{\left[ {#1} \right]}
+\newcommand{\vit}[1]{\left\{ {#1} \right\}}
+
+\newcommand{\pr}[3]{\bigcap\limits_{#1}^{#2} {#3}}
+\newcommand{\uni}[3]{\bigcup\limits_{#1}^{#2} {#3}}
+\newcommand{\suma}[3]{\sum\limits_{#1}^{#2} {#3}}
+
+% inline
+\newcommand{\ipr}[3]{\cap_{#1}^{#2} {#3}}
+\newcommand{\iuni}[3]{\cup_{#1}^{#2} {#3}}
+\newcommand{\isuma}[3]{\sum_{#1}^{#2} {#3}}
+
+\newcommand{\up}[1]{\mathrm{#1}}
+\renewcommand{\cal}[1]{\mathcal{#1}}
+
+\newcommand{\pd}{\subseteq}
+\newcommand{\nd}{\supseteq}
+
+\newcommand{\rz}{\setminus}
+
+\renewcommand{\le}{\leqslant}
+\renewcommand{\ge}{\geqslant}
+%%
+
+%% specificno za fajl
+\newcommand{\sal}{\( \sigma \)-algebra}
+%%
+
+
+%\newcommand{\distr}[3]{\left\{ x \in {#1} \st \left| {#2}(x) \right| \ge {#3} \right\}}
+\newcommand{\abs}[1]{\left| {#1} \right|}
+% \newcommand{\fave}[2]{\left\langle {#1} \right\rangle_{#2}}
+\let\etoolboxforlistloop\forlistloop % save the good meaning of \forlistloop
+\usepackage{autonum}
+\let\forlistloop\etoolboxforlistloop % restore the good meaning of \forlistloopi
+
+\newcommand{\asteriskline}{
+\vskip20pt
+\centerline{
+\Large{
+\textasteriskcentered\hspace{.1em}
+\raisebox{.87ex}\textasteriskcentered\hspace{.1em}
+\textasteriskcentered
+}}
+\vskip20pt
+}
+
+\newcommand{\astfootnote}[1]{%
+\let\oldthefootnote=\thefootnote%
+\setcounter{footnote}{0}%
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}%
+\footnote{#1}%
+\let\thefootnote=\oldthefootnote%
+}
+
+\begin{document}
+\pagenumbering{gobble}
+\title{Probability Theory}
+\subtitle{Cheat Sheet \& Study materials\astfootnote{Luka Šimek, 2025./2026.}}
+\date{}
+
+%\date{\today}
+\maketitle
+\vspace{-5em}
+\begin{flushleft}
+	These materials...
+\end{flushleft}
+\vspace{-.5em}
+
+
+\vspace{.25em}  % Add some space before signature???
+\tableofcontents
+\newpage
+\pagenumbering{arabic}
+
+Ovo sluzi samo za template.\section{Introduction}
+\subsection{Set structures}
+\subsubsection{Definitions}
+Let \( S \) be a set and \(  \cal S \pd \cal P \ob S \) a family of subsets. We define a number of terms: \( \cal S \) is a
+\begin{enumerate}[label=(\alph*)]
+	\item \emph{semiring} if
+	      \begin{itemize}
+		      \item \( A, B \in \cal S \implies A \cap B \in \cal S \)
+		      \item if \(A, B \in \cal S  \) then \( A \setminus B \) is a finite disjoint union of sets in \( \cal S \)
+	      \end{itemize}
+
+	\item \emph{ring} if
+	      \begin{itemize}
+		      \item \( A, B \in \cal S \implies A \cap B \in \cal S \)
+		      \item \( A, B \in \cal S \implies A \rz B \in \cal S \)
+	      \end{itemize}
+
+	\item \emph{semialgebra} if
+	      \begin{itemize}
+		      \item \( A, B \in \cal S \implies A \cap B \in \cal S \)
+		      \item \( A \in \cal S \implies A^c \) is a finite disjoint union of sets in \( \cal S \)
+	      \end{itemize}
+
+	\item \emph{algebra} if it is closed under complements and \emph{finite} unions.
+
+	\item \emph{monotone class} if \( A_j \uparrow A \) and \( A_j \downarrow A \) imply \( A \in \cal S \)
+
+	\item \emph{$\sigma$-algebra} if...
+
+	\item \emph{$\pi$-system} if \( A, B \in \cal S \implies A \cap B \in \mathcal S \).
+
+	\item \emph{$\lambda$-system} if
+	      \begin{itemize}
+		      \item $S \in \cal S$
+		      \item \( A \pd B, \  A,B \in \cal S \implies B \rz A \in \cal S \)
+		      \item \( A_j \uparrow A \implies A \in \cal S \)
+	      \end{itemize}
+\end{enumerate}
+
+\asteriskline
+
+Clearly, a \( \sigma \)-algebra is all of the above. Also:\begin{itemize}
+	\item if \( \cal S \) is both a monotone class and an algebra, it is a \( \sigma \)-algebra,
+	\item if \( \cal S \) is an algebra closed with respect to disjoint unions, it is a \sal,
+	\item if \( \cal S \) is both a \( \pi \)-system and \( \lambda \)-system, it is a \( \sigma \)-algebra.
+\end{itemize}
+
+\subsubsection{Equivalent definition of \( \lambda \)-system}
+A \( \lambda \)-system can also be defined by:
+\begin{itemize}
+	\item \( S \in \cal S \)
+	\item \( A \in \cal S \implies A^c \in \cal S \)
+	\item if \( A_j \in \cal S \) with \( j \in \N \) are disjoint, then \( \iuni j{}A_j \in \cal S \).
+\end{itemize}
+
+Suppose the first definition and let us prove the other. We simply get complements from \( A^c = S \rz A \) and \( S \in \cal S \). Suppose \( A_1 \) and \( A_2 \) are disjoint. Then \( A_1 \pd A_2^c \) so \( A_2^c \rz A_1 \in \cal S \). This means we have finite disjoint unions because
+\begin{equation}
+	A_2^c \rz A_1 = A_2^c \cap A_1^c = \ob{A_1 \cup A_2}^c.
+\end{equation}
+With finite disjoint unions,
+\begin{equation}
+	\uni{j=1}\infty{A_j} = \uni{j=1}\infty{\ug{\uni{k=1}j{A_j}}} \in \cal S
+\end{equation}
+as this is a monotone union.
+
+Now let us prove the other direction. If \( A \pd B \) then \( B \rz A = B \cap A^c = \ob{B^c \cup A }^c \). Then suppose \( A_j \) are monotone increasing. We have the disjoint union
+\begin{equation}
+	\uni{j=1}\infty{A_j} = A_1 \cup \uni{j=2}\infty{\ug{A_j \setminus \uni{k=1}{j-1}A_k}} \in \cal S
+\end{equation}
+as all the set differences are proper.
+
+\subsubsection{Dynkin--Sierpinski \( \pi \)-\( \lambda \) lemma}
+Let \( S \) be a set, \( \cal C \) a \( \pi \)-system and \( \cal D \) a \( \lambda \)-system. Then
+\begin{equation}
+	\cal C \pd \cal D \implies \sigma \ob {\cal C} \pd \cal D.
+\end{equation}
+
+The proof is from~\cite[p.\ 10]{kalle}. Clearly we can assume that \( \cal D \) is the
+smallest possible \( \lambda \)-system, this being denoted \( \lambda(\cal D) \). Taking into account that \( \pi \) and \( \lambda \) together make a \( \sigma \)-algebra, the statement becomes:
+\begin{quote}
+	If \( \cal C \) is a \( \pi \)-system, then \( \lambda (\cal C) \) is also a \( \pi \)-system.
+\end{quote}
+
+Therefore, we need to prove \( A \cap B \in \cal D \) whenever \( A, B \in \cal D \).
+For an arbitrary \( B \in \cal C \) define
+\begin{equation}
+	\cal S_B = \vit{A \in \cal D \st A \cap B \in \cal D}.
+\end{equation}
+Clearly \( \cal S_B \) is a \( \lambda \)-system containing \( \cal C \) (because \( \cal C \) is itself a \( \pi \)-system). Since \( \cal D = \lambda(\cal C) \), it follows
+that \( \cal D \pd \cal S_B \). That is, \( A \cap B \in \cal D \) whenever
+\( B \in \cal C \) and \( A \in \cal D \).
+
+Now for any \( A \in \cal D \) define
+\begin{equation}
+	\cal S_A' = \vit{B \in \cal D \st A \cap B \in \cal D}.
+\end{equation}
+Similarly, and also using the previous result, we get \( \cal D \pd \cal S_A' \)
+and we conclude that \( A \cap B \in \cal D \) whenever \( A, B \in \cal D \).
+
+\asteriskline
+Suppose \( \cal C \pd \cal D \pd \cal F \) where \( \cal F \) is a \( \sigma \)-algebra on
+a probability space. Let \( \cal D \) be the set of all events with a certain property, this property naturally making it a \( \lambda \)-system. Suppose also \( \sigma(\cal C) = \cal F \).
+By the lemma, \( \cal D = \cal F \), that is, all events have the desired property.
+
+\subsubsection{Notable exercises}
+\emph{Any open set of reals is a countable union of intervals}. See~\cite[ex.\ 1.1.2]{du}. Define
+\begin{equation}\label{eq:calsd}
+	\cal S_d = \vit{\prod_{j=1}^d \oc{a_j, b_j} \st -\infty \le a < b \le +\infty} \pd \R^d.
+\end{equation}
+Note that \( \cal S_d \) is a semialgebra (automatically, also a \( \pi \)-system). We claim that
+\( \sigma(\cal S_d) = \cal B(\R^d) \). It suffices to prove that every open set in \( \R^d \) can
+be written as the countable union of sets in \( \cal S_d \).
+
+Take \( d=1 \) with a simple extension afterwards. Let \( A \pd \R \) be open, so that for each \( x \in A \) there is \( \varepsilon_x \) such that \( B(x,\varepsilon_x) \pd A \). Also,
+\begin{equation}
+	A = \uni{x \in A}{}{B(x,\varepsilon_x)}.
+\end{equation}
+Note that \( A \cap \Q \) is dense in \( A \). Namely, each \( x \) is within its ball, and within the ball is a sequence of rationals converging to \( x \).
+For each rational \( y \) such that \( \abs{x-y} < \varepsilon_x/2 \) we can clearly choose an \( \varepsilon_y \) such that
+\( x \in B(y,\varepsilon_y) \pd A \). This gives us the countable union\footnote{while different \( x \) can give different \( \varepsilon_y \), these clearly have a finite supremum}
+\begin{equation}
+	A = \uni{y \in A \cap \Q}{}{B(y,\varepsilon_y)}
+\end{equation}
+
+
+\asteriskline
+
+\emph{Infinite unions of algebras/\( \sigma \)-algebras}. See~\cite[ex.\ 1.1.4]{du}.
+Suppose \( \cal F_1 \pd \cal F_2 \pd \cdots  \) and \( \cal F = \cup_j \cal F_j \).
+
+If \( \cal F_j \) are algebras, then \( \cal F \) is also an algebra because
+\begin{equation}
+	\uni{j\in N}{}{A_j} \in \cal F_{\max N}, \quad A_j \in \cal F_j.
+\end{equation}
+where \( N \pd \N \) is finite.
+
+The analogous claim is not true if \( \cal F_j \) are \( \sigma \)-algebras.
+Let \( S = \R \) and
+\begin{equation}
+	\cal F_j = \sigma \ob{\co{\frac n{2^j}, \frac{n+1}{2^j}} \st n \in \N}, \quad j \in \N.
+\end{equation}
+If \( \cal F \) is a \( \sigma \)-algebra,
+\begin{equation}
+	\vit 0 = \pr{j \in \N}{}{\co{0,\frac1{2^j}}} \in \cal F,
+\end{equation}
+but there is no \( j \) such that \( \vit 0 \in \cal F_j \),
+giving us a contradiction.
+
+\input{2-measure.tex}
+
+\newpage
+\printbibliography
+
+\end{document}
