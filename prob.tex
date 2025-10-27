@@ -305,9 +305,8 @@
 \newpage
 \pagenumbering{arabic}
 
-Ovo sluzi samo za template.\section{Introduction}
-\subsection{Set structures}
-\subsubsection{Definitions}
+\section{Set structures}
+\subsection{Definitions}
 Let \( S \) be a set and \(  \cal S \pd \cal P \ob S \) a family of subsets. We define a number of terms: \( \cal S \) is a
 \begin{enumerate}[label=(\alph*)]
 	\item \emph{semiring} if
@@ -352,7 +351,7 @@ Clearly, a \( \sigma \)-algebra is all of the above. Also:\begin{itemize}
 	\item if \( \cal S \) is both a \( \pi \)-system and \( \lambda \)-system, it is a \( \sigma \)-algebra.
 \end{itemize}
 
-\subsubsection{Equivalent definition of \( \lambda \)-system}
+\subsection{Equivalent definition of \( \lambda \)-system}
 A \( \lambda \)-system can also be defined by:
 \begin{itemize}
 	\item \( S \in \cal S \)
@@ -376,7 +375,7 @@ Now let us prove the other direction. If \( A \pd B \) then \( B \rz A = B \cap 
 \end{equation}
 as all the set differences are proper.
 
-\subsubsection{Dynkin--Sierpinski \( \pi \)-\( \lambda \) lemma}
+\subsection{Dynkin--Sierpinski \( \pi \)-\( \lambda \) lemma}
 Let \( S \) be a set, \( \cal C \) a \( \pi \)-system and \( \cal D \) a \( \lambda \)-system. Then
 \begin{equation}
 	\cal C \pd \cal D \implies \sigma \ob {\cal C} \pd \cal D.
@@ -409,8 +408,8 @@ Suppose \( \cal C \pd \cal D \pd \cal F \) where \( \cal F \) is a \( \sigma \)-
 a probability space. Let \( \cal D \) be the set of all events with a certain property, this property naturally making it a \( \lambda \)-system. Suppose also \( \sigma(\cal C) = \cal F \).
 By the lemma, \( \cal D = \cal F \), that is, all events have the desired property.
 
-\subsubsection{Notable exercises}
-\emph{Any open set of reals is a countable union of intervals}. See~\cite[ex.\ 1.1.2]{du}. Define
+\subsection{Notable exercises}
+\subsubsection{Any open set of reals is a countable union of intervals} See~\cite[ex.\ 1.1.2]{du}. Define
 \begin{equation}\label{eq:calsd}
 	\cal S_d = \vit{\prod_{j=1}^d \oc{a_j, b_j} \st -\infty \le a < b \le +\infty} \pd \R^d.
 \end{equation}
@@ -432,7 +431,7 @@ For each rational \( y \) such that \( \abs{x-y} < \varepsilon_x/2 \) we can cle
 
 \asteriskline
 
-\emph{Infinite unions of algebras/\( \sigma \)-algebras}. See~\cite[ex.\ 1.1.4]{du}.
+\subsubsection{Infinite unions of algebras/\( \sigma \)-algebras} See~\cite[ex.\ 1.1.4]{du}.
 Suppose \( \cal F_1 \pd \cal F_2 \pd \cdots  \) and \( \cal F = \cup_j \cal F_j \).
 
 If \( \cal F_j \) are algebras, then \( \cal F \) is also an algebra because
