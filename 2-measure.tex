@@ -87,12 +87,12 @@ where \( B \) and all \( B_j \) are measurable sets. \bigskip
 \emph{Note} that~\eqref{eq:coordfunc} indeed
 holds specifically for cuboid sets \( B \) and not generally. Instead of these cuboids, we could have also
 chosen the simpler generating set of one-dimensional cylinders \( \pi_j^{-1}(B_j) \).
-Note that in all cases pointwise convergence can be replaced with a.e.\ convergence,
-which is weaker but without affecting integration.
 
 \subsection{Convergence theorems}
 We consider whether \( \int f_n \to \int f \) if \( f \to f_n \) pointwise, where the functions are defined on a \( \sigma \)-finite measure space \( X \). Following~\cite[\textsection 1.4]{du}, we present
 the convergence theorem in order: bounded, Fatou's lemma, monotone, dominated.
+Note that in all cases pointwise convergence can be replaced with a.e.\ convergence,
+which is weaker but without affecting integration.
 
 \subsubsection{Bounded convergence theorem}
 Suppose the \( f_n \) have
@@ -198,12 +198,253 @@ we apply Fatou's lemma twice. The \( + \) and \( - \) parts respectively give
 
 
 \subsection{Measure extension}
+Carath\' eodory's theorem (multiple variations) extends measure from family of subsets to whole \sal \  (unique?); Kolmogorov's theorem extends measures on finite-dimensional subspaces to a single measure on an infinite-dimensional metric probability space.
+
 
 \subsection{Product measure}
+Suppose \( (S, \cal S, \mu) \) and \( (T, \cal T, \nu) \) are
+\( \sigma \)-finite measure spaces. We wish to introduce a measure
+on the product measurable space \( (S \times T, \cal S \otimes \cal T) \).
 
-\subsection{Fubini's theorem}
+\subsubsection{Sections}
+For any \emph{measurable set} \( E \in \cal S \otimes \cal T \), \( s \in S \) and
+\( t \in T \) we define the sections
+\begin{equation}
+	E_s = \vit{t \in T \st (s, t) \in E}, \quad
+	E^t = \vit{s \in S \st (s, t) \in E}.
+\end{equation}
+
+For any measurable \emph{function} \( f \colon S \times T \to U  \) and
+any \( s \in S \) and \( t \in T \) we define the sections
+\( f_s \colon T \to U \) and \( f^t \colon S \to U \) with
+\begin{equation}
+	f_s(t) = f(s,t), \quad f^t(s) = f(s, t).
+\end{equation}
+
+We claim that the sections are \emph{always measurable} (sets or functions).
+Consider first the set \( E_s \).
+Define
+\begin{equation}
+	\cal D = \vit{E \in \cal S \otimes \cal T \st E_s \in \cal T \text{ for all } s \in S}.
+\end{equation}
+Clearly, \( \cal D \) is a \( \lambda \)-system and
+contains the generating \( \pi \)-system of rectangles
+\( A \times B \) since \( (A \times B)_s = B \) if \( s \in A \) and
+\( \emptyset \) otherwise. By Dynkin's lemma, \( \cal D = \cal S \otimes \cal T \).
+
+To prove the measurability of functions \( f_s \), it is simple to show that
+\( f_s^{-1}(B) = \ob{f^{-1}(B)}_s \in \cal T \), for any measurable \( B \).
+
+\asteriskline
+Let \( f \colon S \times T \to \R_{\ge 0} \) be a measurable functions.
+We claim that the \emph{maps}
+\begin{equation}
+	s \mapsto \int_T f(s,t) \ime \nu t, \quad
+	t \mapsto \int_S f(s,t) \ime \mu s
+\end{equation}
+are measurable.
+
+We use a type of Lebesgue's induction.
+Assume first that \( \mu \) and \( \nu \) are finite
+and that \( f = 1_E \) where \( E = A \times B \).
+Then
+\begin{equation}
+	\int_T 1_E(s,t) \ime \nu t = \nu(E_s) = \nu(B) \cdot  1_A(s).
+\end{equation}
+Clearly, \( s \mapsto \nu(B)\cdot 1_A(s) \) is measurable. We wish to
+extend this to \emph{arbitrary indicator function} so we define
+\begin{equation}\label{eq:calDsec3}
+	\cal D = \vit{E \in \cal S \otimes \cal T \st s \mapsto \nu(E_s) \text{ is measurable}}
+\end{equation}
+Again, \( \cal D \) is a \( \lambda \)-system containing
+the generating \( \pi \)-system of measurable rectangles, so
+\( \cal D = \cal S \otimes \cal T \).
+
+This is then extended to simple functions (linearity of integration)
+and to general nonnegative measurable functions. For the latter,
+note that monotone convergence of integrals \( \int_T f_n(s,t) \ime \nu t\)
+means the pointwise convergence of the maps \( s \mapsto \int_T f_n(s,t) \ime \nu t \),
+and the class of measurable functions is closed under
+pointwise limits (see~\cite[ex.\ 1.2.7]{du}) \bigskip
+
+\emph{Note.} The requirement \( f \ge 0 \) serves to insure
+that the integrals exist. An alternative requirement is
+\( \int \abs f \D \xi < \infty \) (with \( \xi \) product measure).
+
+\emph{Note.} The assumption of finite measures (important for \( \cal D \) being a \( \lambda \)-system) does not lose on
+generality because of the following: take \( F_n \uparrow T \) with
+\( \nu(F_n) < \infty \). Then the maps
+\( s \mapsto \nu(E_s \cap F_n) \) converge pointwise to
+\( s \mapsto \nu(E_s) \) with pointwise convergence preserving measurability.
+The family
+\begin{equation}
+	\cal D' = \vit{E \in \cal S \otimes \cal T \st
+		s \mapsto \nu(E_s \cap F_n) \text{ is measurable for all } n}
+\end{equation}
+is certainly a \( \lambda \)-system, ensuring the measurability of all
+\( s \mapsto \nu(E_s \cap F_n) \).
+
+\subsubsection{Definitions}
+We can define a measure \( \xi \) on measurable rectangles with
+\begin{equation}\label{eq:defprodm1}
+	\xi(A \times B) = \mu(A)\nu(B), \quad A \in \cal S, \ B \in \cal T.
+\end{equation}
+The function \( \xi \) is then extended to a unique measure on
+\( \cal S \otimes \cal T \) by Carath\' eodory-type theorems.
+
+\asteriskline
+
+\emph{Alternatively}, we can define
+\begin{equation}\label{eq:defprodm2}
+	\xi'(E) = \int_T \mu(E^t) \ime \nu t =
+	\int_S \nu(E_s) \ime \mu s,
+	\quad E \in \cal S \otimes \cal T.
+\end{equation}
+
+\asteriskline
+
+Let us \emph{prove} these definitions are equivalent. Formally using
+Fubini's theorem:
+\begin{equation}\label{eq:prodmfubini0}
+	\begin{aligned}
+		\xi(E) & = \int_{S \times T} 1_{E}(u) \ime \xi u           \\
+		       & = \int_S \ime \mu s \int_T 1_{E}(s, t) \ime \nu t \\
+		       & = \int_S \nu(E_s) \ime \mu s = \xi'(E).
+	\end{aligned}
+\end{equation}
+
+Conversely, for \( E = A \times B \),
+\begin{equation}\label{eq:prodmalt}
+	\xi'(E) = \int_S \nu(E_s) \ime \mu s =
+	\int_T \nu(B) 1_A(s) \ime \mu s = \mu(A) \nu(B) = \xi(E).
+\end{equation}
+
+\asteriskline
+
+We should also \emph{justify} the second equality in~\eqref{eq:defprodm2}.
+Define \( \xi'(E) = \int_T \mu(E^t) \ime \nu s \)
+and \( \xi''(E) = \int_S \nu(E_s) \ime \mu t \).
+By~\eqref{eq:prodmalt} \( \xi' \) and
+\( \xi'' \) agree on the generating \( \pi \)-system of
+measurable rectangles. By a well known lemma, \( \xi' = \xi '' \).
+This argument also suffices to prove \( \xi=\xi' \) (Fubini's theorem is not necessary, \eqref{eq:prodmfubini0} serves a heuristic purpose).
+
+\subsubsection{Fubini's theorem}
+Let \( f \colon S \times T \to \R \) be a measurable function such that
+\( \int_{S \times T} \abs f \D \xi < \infty \). Then
+\begin{equation}\label{eq:prodmfubini}
+	\int_{S \times T} f \D \xi
+	= \int_S \ime \mu s \int_T f(s, t) \ime \nu t
+	= \int_T \ime \nu t \int_S f(s, t) \ime \nu s.
+\end{equation}
+
+Consider first a measurable function \( f \ge 0 \).
+By previous discussion, the integrals are well-defined and \( \xi \) satisfies:
+\begin{equation}\label{eq:prodmfubini2}
+	\xi(E) = \int_S \ime \mu s \int_T 1_E(s, t) \ime \nu t, \quad E \in \cal S \otimes \cal T,
+\end{equation}
+where we also know the order of integration can be reversed. Thus~\eqref{eq:prodmfubini} holds for indicator functions, and is extended to arbitrary
+nonnegative functions by linearity and monotone convergence. For general integrable \( f \), apply the previous case to \( f^+ \) and \( f^- \) and subtract. Integrability ensures
+that the integrands are measurable and the difference is well-defined.
+%\cite[p.\ 25]{kalle} notes that \( f \) can be infinite only on set of measure \( 0 \).; why?
 
 \subsection{Notable exercises}
+\subsubsection{Equality of measures agreeing on a generating \( \pi \)-system}
+Let \( \mu \) and \( \nu \) be finite measures on measurable space
+\( (S, \cal S) \). If
+\begin{equation}
+	\mu(C) = \nu(C), \quad C \in \cal C,
+\end{equation}
+where \( \cal C \) is a generating \( \pi \)-system, then \( \mu=\nu \). This can be
+extended to \( \sigma \)-finite measures.
+
+To \emph{prove} this, note that
+\begin{equation}
+	\cal D = \vit{E \in \cal S \st \mu(E) = \nu(E)}
+\end{equation}
+is a \( \lambda \)-system containing \( \cal C \).
+
+For \emph{\( \sigma \)-finite} measures, note that the previous implies
+that \( \mu=\nu \)  when restricted to finite measure spaces
+\( (S\cap E_n, \cal S \cap E_n) \), where \( E_n \uparrow S \)
+and \( \mu(E_n) < \infty \).
+Then for any \( E \in \cal S \)
+\begin{equation}
+	\mu(E) = \lim_{n \ub} \mu(E \cap E_n) = \lim_{n \ub} \nu(E \cap E_n) = \nu(E).
+\end{equation}
+
+\subsubsection{Pointwise convergence preserves measurability}
+See~\cite[ex.\ 1.3.7]{du}. Suppose \( f_n \to f \) pointwise with
+\( f_n \) measurable. Then \( f \) is measurable because
+\begin{equation}
+	\vit{f \le a} =
+	\bigcup_{r \in \N}
+	\bigcup_{k=1}^\infty
+	\bigcap_{n \ge k}
+	\vit{f_n \le a + \frac 1r}.
+\end{equation}
+
+\subsubsection{Tail-formula for \( p \)-th moment}
+If \( f \) is a measurable function, then
+\begin{equation}
+	\norm f_p
+	= \ob{p\int_\R y^{p-1} \mu ({\abs {f(x)} \ge y) \D y} }^{1/p}.
+\end{equation}
+
+It can be derived, using Fubini for nonnegative functions:
+\begin{equation}
+	\begin{aligned}
+		\norm f_p^p & = \int_\R \abs{f(x)}^p \D x                                    \\
+		            & = \int_\R \int_0^{\abs{f(x)}} py^{p-1} \D y \D x               \\
+		            & = \int_\R py^{p-1} \int_\R 1_{\cc{0,\abs{f(x)}}}(y)  \D x \D y \\
+		            & = p\int_\R y^{p-1} \mu (\abs{f(x)} \ge y) \D y.
+	\end{aligned}
+\end{equation}
+
+\asteriskline
+This holds for all \( 0 < p < \infty \). In probability, this is written
+\begin{equation}
+	\E(X ^p) = p \int_\R x^{p-1}\P(X \ge x) \D x, \quad X \ge 0.
+\end{equation}
+
+
+\subsubsection{\( \infty \)-norm as limit of \( p \)-norms}
+We claim that
+\begin{equation}
+	\norm f_\infty = \lim_{p \ub} \norm f_p.
+\end{equation}
+where \( f \) is a measurable function on a probability space.
+
+Let \( \varphi = \sum_{j=1}^n a_j 1_{A_j} \) be a \emph{simple} function
+on an \emph{arbitrary} measure space, so that
+\( \norm \varphi_p^p = \sum_j \abs {a_j}^p \mu(A_j) \).
+Define also \( M = \max \vit{\abs{a_j} \st 1 \le j \le n } = \norm \varphi_\infty  \)
+and let \( m \) be the corresponding index.
+Clearly \( \norm \varphi_p \le \norm \varphi_\infty \), but also
+\begin{equation}
+	\norm \varphi_p \ge M \ob{\mu(A_m)}^{1/p} \rightarrow M, \quad p \ub,
+\end{equation}
+proving the claim for simple functions on arbitrary measure spaces.
+
+Similar ideas are used for general \( f \) on a \emph{probability} space.
+Again \( \norm f_p \le \norm f_\infty \). Take arbitrary \( \varepsilon > 0 \)
+and set \( A_\varepsilon = \vit{\abs f > M - \varepsilon} \). By definition of
+\( M \), \( 0 < \mu(A_\varepsilon) < \infty \). Then,
+\begin{equation}
+	\norm f_p^p \ge \int_{A_\varepsilon} \abs f^p \D \mu
+	\ge (M-\varepsilon)^p \mu(A_\varepsilon).
+\end{equation}
+Again \( \liminf_p \norm f_p \ge M-\varepsilon \), and the claim follows
+by \( \varepsilon \downarrow 0 \).
+
+% \subsubsection{Density of simple functions in \( \L^p \) spaces}
+
+% \subsubsection{Density of step functions in \( \L^p(\R) \) spaces}
+
+%todo:
+% luzin, egorov, etc.?
+
+
 
 %%%%%%%%%%%%%%
 
