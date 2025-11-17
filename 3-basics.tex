@@ -1,1 +1,258 @@
 \section{Basics of probability}
+
+% uniform integrability
+% borel-cantelli
+% inequalities
+%
+%
+\subsection{Inequalities}
+\subsubsection{Jensen}
+Suppose \( X \) is a random variable and \( \varphi \colon \R \to \R \) is
+a \emph{convex} function. Then
+\begin{equation}
+	\varphi(\E X) \le \E (\varphi X).
+\end{equation}
+
+For \( c = \E X \), consider an affine function \( h(x) = ax + b \) lying under \( \varphi \) (\( h \le \varphi \))
+but with \( h(c) = \varphi(c) \) (the graph of \( h \) is separating two disjoint convex sets: epigraph of \( \varphi  \) and \( \oo{c,\infty} \times \oo{-\infty, c} \)). Then
+\begin{equation}
+	\varphi(\E X) = h(\E X) = a\E X + b = \E (aX + b) = \E h(X) \le \E \varphi(X).
+\end{equation}
+
+
+\subsubsection{\holder}
+For any measurable functions \( f,g \) and real \( p,q,r > 0 \) such that \( 1/r = 1/p + 1/q \),
+\begin{equation}
+	\norm{fg}_r \le \norm f_p \norm g_q.
+\end{equation}
+
+Clearly we can take \( r=1, \norm f_p = 1, \norm g_q = 1 \) (\emph{unless} \( f=0 \) or \( g=0 \) which is a trivial edge-case). It is true that
+\begin{equation}\label{eq:holderlemma}
+	uv \le \frac{u^p}p + \frac{v^q}q, \quad u,v\ge 0.
+\end{equation}
+
+By setting \( u=\abs{f(x)} \) and \( v=\abs{g(x)} \) and integrating, we get
+\begin{equation}
+	\int \abs{fg} \le p^{-1} \int \abs f^p + q^{-1} \int \abs g^q = p^{-1} + q^{-1} = 1.
+\end{equation}
+
+\asteriskline
+\emph{Note} that \( 1/p+1/q=1 \) can be written as
+\begin{equation}\label{eq:conjuequiv}
+	(p-1)(q-1) = 1
+\end{equation}
+or in the more general case \( (p/r-1)(q/r-1)=1 \) or \( (p-r)(q-r)=r^2 \).
+
+\asteriskline
+The inequality~\eqref{eq:holderlemma} can be proven via simple calculus or from
+(see~\cite[p.\ 26]{kalle}):
+\begin{equation}
+	uv \le \int _0^u x^{p-1} \D x + \int_0^v y^{q-1} \D y = \frac {u^p}p + \frac {v^q}q.
+\end{equation}
+This is because \( uv \) is the area of the rectangle with sides \(  u \) and \( v \)
+on \( x \)- and \( y \)- axes respectively, \( \int_0^u x^{p-1} \D x \) is the area
+under the graph of \( x^{p-1} \) up to \( u \) and
+\( \int_0^v y^{q-1} \D y \) is the area to the left of said graph up to \( v \).
+These regions always cover the rectangle with equality when \( x^{p-1} \) passes
+through \( (u,v) \), that is \( v = u^{p-1} \).
+
+
+\subsubsection{Minkowski}
+For \( p > 1 \) (the case \( p=\infty \) is easy),
+\begin{equation}
+	\norm {f+g}_p \le \norm f_p + \norm g_p.
+\end{equation}
+
+Firstly,
+\begin{equation}\label{eq:prmink1}
+	\int \abs{f+g}^p = \int \abs{f+g} \abs{f+g}^{p-1} \le
+	\int \abs f \abs{f+g}^{p-1} + \int \abs g \abs{f+g}^{p-1}.
+\end{equation}
+The integral \( \int \abs f \abs {f+g}^{p-1} \) can be interpreted as
+the \( 1 \)-norm of a product, so applying \holder \ we get
+\begin{equation}
+	\int \abs f \abs{f+g}^{p-1} \le \norm f_p \ob { \norm{f+g}_p^p }^{1/q}.
+\end{equation}
+With the analogous inequality for the other part of~\eqref{eq:prmink1}
+we get
+\begin{equation}
+	\int \abs{f+g}^p \le \norm{f+g}_p^{p/q} \ug{\norm f_p + \norm g_p}.
+\end{equation}
+Dividing we get the required result (\( p-p/q =1\)).
+
+\subsubsection{Markov/Chebishev-type inequalities}
+The variant is from~\cite[p.\ 29]{du}. For a function \( \varphi \colon \R \to \R_{\ge 0} \),
+\( A \) measurable and denoting \( m_A = \inf \vit{\varphi(y) \st y \in A} \),
+\begin{equation}
+	m_A \P(X \in A) \le \E(\varphi(X) \whi X \in A) \le \E \varphi(X).
+\end{equation}
+The \emph{proof} is from taking expectations in
+\begin{equation}
+	m_A 1_A(X) \le \varphi(X) 1_A(X) \le \varphi(X).
+\end{equation}
+
+\asteriskline
+
+For \( X \ge 0  \), \( A = \co{a, \infty} \) for some \( a \ge 0 \) and \( \varphi \equiv 1 \) we
+get Markov's inequality
+\begin{equation}
+	\P(X \ge a ) \le \frac{\E X} a.
+\end{equation}
+If \( X \) is not nonnegative, we need to take \( \varphi(x) = \abs x \).
+
+For \( A = \co{a, \infty} \) for some \( a \ge 0 \) and \( \varphi(x) = (x-\E X)^2 \)
+we get Chebishev's inequality
+\begin{equation}
+	\P( \abs{X - \E X} \ge a  ) \le \frac {\var X}{a^2}.
+\end{equation}
+The variant with \( \varphi(x) = x^2 \) is also legitimate:
+\begin{equation}
+	\P(\abs X \ge a) \le \frac{\E X^2}{a^2}.
+\end{equation}
+
+\subsubsection{Tails of the normal distribution}
+The following is direct (Nourdin, p.\ 39):
+\begin{align}
+	\ob{\frac 1x - \frac 1{x^3}} e^{-x^2/2}
+	 & = \int_x^\infty e^{-y^2/2} \ob{1- \frac 3{y^4}} \D y \\
+	 & \le \int_x^\infty e^{-y^2/2} \D y \le
+	\frac 1x \int_x^\infty ye^{-y^2/2} \D y = \frac 1x e^{-x^2/2}.
+\end{align}
+
+\subsection{Borel--Cantelli lemma}
+For events \( A_j \),
+\begin{equation}
+	\sum_{j \ge 1} \P(A_j) < \infty \implies \P(A_j \io) = 0.
+\end{equation}
+
+\emph{Note} that
+\begin{align}
+	\left\{ A_j \io \right\}  & = \left\{ \sum_{j \ge 1} 1_{A_j} = \infty \right\},   \\
+	\left\{ A_j \ult \right\} & = \left\{ \sum_{j \ge 1} 1_{A_j^c} < \infty \right\}.
+\end{align}
+
+If \( \sum_j \P(A_j) < \infty \) then
+\begin{equation}
+	\sum_{j \ge 1} P(A_j) = \sum_{j \ge 1} \E \ob{1_{A_j}} = \E \ob{\sum_{j \ge 1} 1_{A_j}}
+\end{equation}
+is \( < \infty \), so in particular \( \P\ob{\sum_j 1_{A_j} = \infty }= 0.\)
+
+
+\asteriskline
+The \emph{converse} holds when \( A_j \) are \emph{independent}.
+Note
+\begin{equation}
+	\vit{A_j \io}^c = \ob{\bigcap_{n \ge 1} \bigcup_{k \ge n} A_k}^c
+	= \bigcup_{n \ge 1} \bigcap_{k \ge n} A_k^c.
+\end{equation}
+Then
+\begin{equation}
+	\begin{aligned}
+		1 & = \P(\text{not } A_j \io)                            \\
+		  & = \lim_{n \ub} \P\ob{\bigcap_{k \ge n} A_k^c}
+		= \lim_{n \ub} \prod_{k \ge n} \ug{1-\P(A_k)}            \\
+		  & \le \lim_{n \ub} \exp \ob{- \sum_{k \ge n} \P(A_k)},
+	\end{aligned}
+\end{equation}
+therefore \( \lim_{n \ub} \sum_{k \ge n} \P(A_k) = 0 \) which is equivalent
+to \( \sum_{n \ge 1} \P(A_n) < \infty \).
+
+\emph{Note} also that we used \( 1-x \le e^{-x}  \) for all \( x \).
+
+\subsection{Uniform integrability}
+\subsubsection{Definition and characterization}
+\subsubsection{Convergence of means}
+
+\subsection{Convergence of random variables}
+
+\subsection{Stochastic processes and finite-dimensional distributions}
+
+\subsection{Independence and \zerone \ laws}
+
+\subsection{Constructing random variables with given distributions}
+
+\subsection{Notable exercises}
+\subsubsection{Asymptotics of tail-expectations}
+See~\cite[ex.\ 1.6.14]{du}. Let \( X \ge 0 \) (without assuming \( E(1/X) < \infty \)). Then
+\begin{equation}
+	\lim_{y \ub} y\E \ob{\frac 1X \whi X > y} = 0, \quad
+	\lim_{y \downarrow 0} y\E \ob{\frac 1X \whi X > y} = 0.
+\end{equation}
+
+For the \emph{first} part,
+\begin{equation}
+	\E \ob{\frac yX \whi X > y} \le \E (1\whi X > y) = \P(X > y) \un.
+\end{equation}
+
+For the \emph{second} part,
+denoting \( n = 1/y \) and replacing \( X \) with \( 1/X \), the limit becomes
+\( \lim_{n \ub} \frac 1n \E(X; X < n) \) and we have
+\begin{equation}
+	\frac 1n \E(X \whi X \le n) = \frac 1n \int_0^n x \D F
+	= \frac 1n \int_0^{\sqrt n} x \D F + \frac 1n \int_{\sqrt n} ^n x\D F \un,
+\end{equation}
+because
+\begin{equation}
+	\int_0^{\sqrt n} x \D F \le \sqrt n, \qquad
+	\int_{\sqrt n}^n x \D F \le n \ug{F(n) - F(\sqrt n)}.
+\end{equation}
+
+\subsubsection{For \( p < q \), \( \L^q \)-convergence implies \( \L^p \)-convergence}
+See~\cite[ex.\ 1.6.11]{du}. Let \( 0 < p < q \) and \( \E \abs X ^q < \infty \). Then
+\begin{equation}
+	\E \abs X^p \le \ob{\E \abs X^q}^{p/q}.
+\end{equation}
+In particular,
+\begin{itemize}
+	\item the \( p \)-norm is \emph{smaller}; by taking the root we get \( \norm X_p \le \norm X_q \),
+	\item the \( p \)-norm is \emph{finite}, so if \( X \) is \( q \)-integrable it is \( p \)-integrable,
+	\item \emph{convergence} in \( \L^q \) implies convergence in \( \L^p \).
+\end{itemize}
+
+To \emph{prove} it, note that
+\begin{equation}
+	\E \abs X^p = \E \ug{\ob{\abs X^q}^{p/q}}
+	\le \ob{\E \abs X^q}^{p/q}
+\end{equation}
+where the inequality is Jensen for concave \( x \mapsto x^{p/q} \).
+
+\subsubsection{Integrating with respect to Lebesgue--Stieltjes measures}
+For \( F, G \) corresponding to \( \mu, \nu \) measures on \( (\R, \mathcal B) \),
+\begin{enumerate}[label=(\alph*)]
+	\item \( \int_{\oc{a,b}} \ug{F(y)-F(a)} \ime Gy =
+	      (\mu \otimes \nu) \vit{(x, y) \st a < x \le y < b} \),
+	\item
+	      \( \displaystyle \int_{\oc{a,b}} F(y) \ime Gy + \int_{\oc{a,b}} G(y) \ime Fy
+	      = F(b)G(b) - F(a)G(a) + \sum_{x \in \oc{a,b} } \mu(\{x\})\nu(\{x\}). \)
+	\item In particular, if \( F=G \) is continuous,
+	      \begin{equation}
+		      \int_{\oc{a,b}} 2F(y) \ime Fy = F(b)^2-F(a)^2.
+	      \end{equation}
+\end{enumerate}
+
+\emph{Firstly}, denote \( D_{a,b} = \vit{(x,y) \st a < x \le y \le b} \).
+Then,
+\begin{align}
+	(\mu \otimes \nu)(D_{a,b}) & = \int \mu(D_{a,b}^y) \ime \nu y           \\
+	                           & = \int_{\oc{a,b}} \mu(\oc{a,y}) \ime \nu y \\ &=
+	\int_{\oc{a,b}} \ug{F(b)-F(a)} \ime Gy.
+\end{align}
+
+\emph{Secondly},
+\begin{align}
+	\int_{\oc{a,b}} F(y) \ime Gy & = \int_{\oc{a,b}} \ug{F(y)-F(a) + F(a)} \ime Gy                  \\
+	                             & = \int_{\oc{a,b}} \ug{F(y)-F(a)} \ime Gy + F(a) \ug{G(b)-G(a)} =
+	(\mu \otimes \nu)(D_{a,b}).
+\end{align}
+Analogously,
+\begin{align}
+	\int_{\oc{a,b}} G(y) \ime Fy = (\mu \otimes \nu)(D_{a,b}') + G(a) \ug{F(b)-F(a)}
+\end{align}
+where \( D_{a,b}' = \vit{(x,y) \st a < y \le x \le b} \).
+The final result follows from
+\begin{align}
+	( \mu \otimes \nu)(D_{a,b}) + (\mu \otimes \nu)(D_{a,b}')
+	 & = (\mu \otimes \nu)(D_{a,b} \cup D_{a,b}') + (\mu \otimes \nu)(D_{a,b} \cap D_{a,b}') \\
+	 & = \ug{F(b)-F(a)}\ug{G(b)-G(a)} + \sum_{x \in \oc{a,b}} \mu(\{x\}) \nu(\{ y\}).
+\end{align}
+

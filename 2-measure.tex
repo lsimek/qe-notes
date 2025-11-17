@@ -378,7 +378,7 @@ See~\cite[ex.\ 1.3.7]{du}. Suppose \( f_n \to f \) pointwise with
 \( f_n \) measurable. Then \( f \) is measurable because
 \begin{equation}
 	\vit{f \le a} =
-	\bigcup_{r \in \N}
+	\bigcap_{r \in \N}
 	\bigcup_{k=1}^\infty
 	\bigcap_{n \ge k}
 	\vit{f_n \le a + \frac 1r}.
@@ -388,7 +388,7 @@ See~\cite[ex.\ 1.3.7]{du}. Suppose \( f_n \to f \) pointwise with
 If \( f \) is a measurable function, then
 \begin{equation}
 	\norm f_p
-	= \ob{p\int_\R y^{p-1} \mu ({\abs {f(x)} \ge y) \D y} }^{1/p}.
+	= \ob{p\int_0^\infty y^{p-1} \mu ({\abs {f(x)} \ge y) \D y} }^{1/p}.
 \end{equation}
 
 It can be derived, using Fubini for nonnegative functions:
@@ -397,15 +397,41 @@ It can be derived, using Fubini for nonnegative functions:
 		\norm f_p^p & = \int_\R \abs{f(x)}^p \D x                                    \\
 		            & = \int_\R \int_0^{\abs{f(x)}} py^{p-1} \D y \D x               \\
 		            & = \int_\R py^{p-1} \int_\R 1_{\cc{0,\abs{f(x)}}}(y)  \D x \D y \\
-		            & = p\int_\R y^{p-1} \mu (\abs{f(x)} \ge y) \D y.
+		            & = p\int_0^\infty y^{p-1} \mu (\abs{f(x)} \ge y) \D y.
 	\end{aligned}
 \end{equation}
 
 \asteriskline
 This holds for all \( 0 < p < \infty \). In probability, this is written
-\begin{equation}
-	\E(X ^p) = p \int_\R x^{p-1}\P(X \ge x) \D x, \quad X \ge 0.
+\begin{equation}\label{eq:tailpmom-prob}
+	\E(X ^p) = p \int_0^\infty x^{p-1}\P(X \ge x) \D x, \quad X \ge 0.
 \end{equation}
+
+\asteriskline
+If probability if \( X \ge 0 \) attains \emph{only integer values}, then
+for \( x \in \oc{n,n+1} \) we have \( \P(X \ge x) = \P (X \ge n+1) \) giving us
+\begin{align}
+	\E (X^p) & = p\int_0^\infty x^{p-1}\P(X \ge x) \D x                          \\
+	         & = p\sum_{n=0}^\infty \int_{\oc{n,n+1}} x^{p-1}\P(X \ge x) \D x    \\
+	         & = p\sum_{n=0}^\infty \int_{\oc{n,n+1}} x^{p-1}\P(X \ge n+1) \D x  \\
+	         & = p\sum_{n=0}^\infty \P(X \ge n+1) \int_{\oc{n,n+1}} x^{p-1} \D x \\
+	         & = \sum_{n=0}^\infty \left[ (n+1)^p-n^p \right] \P(X \ge n+1)      \\
+	         & = \sum_{n=1}^\infty \left[ n^p-(n-1)^p \right] \P(X \ge n),
+\end{align}
+with the exchange of integrals being Fubini for nonnegatives.
+% In particular \[ EX = \sum_{n=1}^\infty \P(X \ge n) \].
+
+\asteriskline
+
+Another \emph{generalization} is for \( H \) of the form
+\( H(x) = \int_{-\infty}^x h(y) \D y \) where \( h \colon \R \to \R_{\ge 0} \).
+Then
+\begin{align}
+	\E H(X) & = \E \int_0^X h(y) \D y                                   \\
+	        & = \E \int_0^\infty h(y) 1_{\left\{ y \le X \right\}} \D y \\
+	        & = \int_0^\infty h(y) \P (X \ge y) \D y,
+\end{align}
+again with Fubini for nonnegatives.
 
 
 \subsubsection{\( \infty \)-norm as limit of \( p \)-norms}
