@@ -159,11 +159,94 @@ to \( \sum_{n \ge 1} \P(A_n) < \infty \).
 
 \emph{Note} also that we used \( 1-x \le e^{-x}  \) for all \( x \).
 
+\subsection{Convergence of random variables}
+
+
 \subsection{Uniform integrability}
 \subsubsection{Definition and characterization}
-\subsubsection{Convergence of means}
+See~\cite[p.\ 106]{kalle}. A family \( (X_j)_{j \in J} \) of random variables is uniformly integrable if
+\begin{equation}
+	\lim_{r\ub} \sup_{j \in J} \E \ob{\abs{X_j} \whi \abs {X_j} > r} = 0.
+\end{equation}
+If it's a sequence \( (X_n)_{n \in \N} \) of \emph{integrable} variables, then
+\begin{equation}
+	\lim_{r\ub} \limsup_{n \ub} \E \ob{\abs{X_n} \whi \abs {X_n} > r} = 0
+\end{equation}
+\emph{suffices}, because
+\begin{equation}
+	\lim_{r \ub} \ug{ \limsup_{n \ub} \E \ob{\abs{X_n} \whi \abs{X_n} > r} - \sup_{n \in \N} \E \ob{\abs{X_n} \whi \abs{X_n} > r} } = 0,
+\end{equation}
+since both parts themselves tend to \( 0 \).
 
-\subsection{Convergence of random variables}
+\asteriskline
+For uniform integrability, boundedness in \( \L^p \) for some \( p > 1 \) (meaning \( \sup_j \E \abs{X_j}^p < \infty \)) \emph{suffices}.
+We use the Markov-type inequality: \( \P(\abs{X_j} \ge x) \le x^{-p}\E\abs{X_j}^p  \) to get
+\begin{align}
+	\E (\abs{X_j} \whi \abs{X_j} > r ) & = \int_0^\infty \P(\abs{X_j} \cdot 1_{\vit{\abs{X_j} > r}} \ge x) \D x
+	= \int_r^\infty \P(\abs{X_j} \ge x) \D x                                                                    \\ &\le \E \abs{X_j}^p \int_r^\infty x^{-p} \D x
+	= \frac 1{p-1}r^{1-p} \E \abs{X_j} ^p.
+\end{align}
+for all \( j \in J \) and \( r > 0 \), though~\cite{kalle} says something different.
+
+\asteriskline
+Now the main \emph{characterization} of uniform integrability: \( (X_j)_j \)
+are uniformly integrable if and only if
+\begin{equation}
+	\sup_{j \in J} \E \abs{X_j} < \infty \quad \text{and} \quad \lim_{\P(A) \un} \sup_{j \in J}
+	\E(\abs{X_j} \whi A) = 0.
+\end{equation}
+\emph{Only if.}
+Set arbitrary \( \varepsilon > 0 \) and choose \( r_0 \) so that
+\( \sup_j \E(\abs{X_j} \whi \abs{X_j} > r) < \varepsilon \) for \( r \ge r_0 \).
+\begin{align}
+	\E \abs{X_j} & = \E (\abs{X_j} \whi \abs{X_j} \le r_0) + \E(\abs{X_j} \whi \abs{X_j} > r_0) \\
+	             & \le r_0 + \E(\abs{X_j} \whi \abs{X_j} > r_0)
+	\le r_0 + \varepsilon
+\end{align}
+This proves the first part.
+
+More generally for any \( r > 0 \),
+\begin{align}
+	\E(\abs{X_j} \whi A) & = \E(\abs{X_j} \whi \abs{X_j} \le r, A)
+	+ \E(\abs{X_j} \whi \abs{X_j} >r, A)                                     \\
+	                     & \le r\P(A) + \E(\abs{X_j} \whi \abs{X_j} > r) \un
+\end{align}
+as \( \P(A) \un \) and \( r \ub \) and uniformly in \( j \). This proves the second part.
+
+\emph{If.} Define \( A_{j,r} = \vit{\abs{X_j} > r} \). Then the probabilities of these events are bounded
+uniformly in \( j \) by Markov's inequality:
+\begin{equation}
+	\sup_j \P(A_{j,r}) \le r^{-1} \sup_j \E \abs{X_j}.
+\end{equation}
+
+For any \( \varepsilon > 0 \) and large enough \( r \), the assumption implies
+\begin{equation}
+	\sup_{j,k \in J } \E(\abs{X_j} \whi A_{k, r}) < \varepsilon,
+\end{equation}
+which in particular gives the desired uniform integrability by taking only \( k=r \).
+
+\asteriskline
+A similar technique can be used to prove the following: if \( X \) is integrable,
+then
+\begin{equation}
+	\lim_{\P(A) \un} \E (\abs X \whi A) = 0.
+\end{equation}
+We know that
+\begin{equation}
+	\lim_{r \ub} \E(\abs X \whi \abs X > r) = 0
+\end{equation}
+because \( X \cdot 1_{\vit{X > r}} \un \) and dominated convergence. The
+\enquote{rest of \( A \)} is not a problem since
+\begin{equation}
+	\E(\abs X \whi A) \le r\P(A) + \E(\abs X \whi \abs X > r).
+\end{equation}
+
+\subsubsection{Convergence of means}
+For random variables \( X, X_1, X_2, \ldots \) with \( X_n \konvd X \) we have
+\begin{equation}\label{eq:unifco-conmean}
+	\E X_n \to \E X < \infty \iff  X_n \text{ are uniformly integrable.}
+\end{equation}
+
 
 \subsection{Stochastic processes and finite-dimensional distributions}
 
@@ -240,9 +323,9 @@ Then,
 
 \emph{Secondly},
 \begin{align}
-	\int_{\oc{a,b}} F(y) \ime Gy & = \int_{\oc{a,b}} \ug{F(y)-F(a) + F(a)} \ime Gy                  \\
-	                             & = \int_{\oc{a,b}} \ug{F(y)-F(a)} \ime Gy + F(a) \ug{G(b)-G(a)} =
-	(\mu \otimes \nu)(D_{a,b}).
+	\int_{\oc{a,b}} F(y) \ime Gy & = \int_{\oc{a,b}} \ug{F(y)-F(a) + F(a)} \ime Gy                \\
+	                             & = \int_{\oc{a,b}} \ug{F(y)-F(a)} \ime Gy + F(a) \ug{G(b)-G(a)} \\ &=
+	(\mu \otimes \nu)(D_{a,b}) + F(a)\ug{G(b)-G(a)}.
 \end{align}
 Analogously,
 \begin{align}
@@ -253,6 +336,6 @@ The final result follows from
 \begin{align}
 	( \mu \otimes \nu)(D_{a,b}) + (\mu \otimes \nu)(D_{a,b}')
 	 & = (\mu \otimes \nu)(D_{a,b} \cup D_{a,b}') + (\mu \otimes \nu)(D_{a,b} \cap D_{a,b}') \\
-	 & = \ug{F(b)-F(a)}\ug{G(b)-G(a)} + \sum_{x \in \oc{a,b}} \mu(\{x\}) \nu(\{ y\}).
+	 & = \ug{F(b)-F(a)}\ug{G(b)-G(a)} + \sum_{x \in \oc{a,b}} \mu(\{x\}) \nu(\{ x\}).
 \end{align}
 
