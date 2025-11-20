@@ -160,6 +160,126 @@ to \( \sum_{n \ge 1} \P(A_n) < \infty \).
 \emph{Note} also that we used \( 1-x \le e^{-x}  \) for all \( x \).
 
 \subsection{Convergence of random variables}
+\subsubsection{Characterizing weak convergence I (expectation version)}
+It holds that \( X_n \konvd X \), meaning
+\( F_n(x) \rightarrow F(x) \) for all \( x \) such that \( F \) is continuous at \( x \),
+\emph{if and only if} \( \E g(X_n) \to \E g(X) \) for all
+\emph{continuous and bounded} functions \( g \).
+
+First \emph{assume weak convergence}. There exist variables \( Y_n, Y \) with distributions
+\( F_n, F \) such that \( Y_n \konvas Y \) (see below). Then also \( g(Y_n) \konvas g(Y) \) and
+\begin{equation}
+	\E g(X_n) = \E g(Y_n) \rightarrow \E g(Y) = \E g(X)
+\end{equation}
+using the \emph{bounded convergence} theorem.
+
+Now the \emph{converse}. We want \( \E g(X_n) \to \E g(X) \)
+where \( g = 1_{ \oc{\infty, x}  } \), but these functions are not continuous. The idea
+then is to approximate them by continuous \( g \)'s.
+
+Fix an \( x \in \R \) and for all \( r > 0 \) define
+\begin{itemize}
+	\item \( g_{r+} \) as \( 1 \) up to \( x \), \( 0 \) from \( x+1/r \) onwards and linear inbetween;
+	\item \( g_{r-} \) as \( 1 \) up to \( x - 1/r \), \( 0 \) from \( x \) onwards and linear inbetween.
+\end{itemize}
+Then we have
+\begin{equation}
+	\limsup_{n \ub} \P(X_n \le x) \le \lim_{n \ub} \E g_{r+}(X_n) = \E g_{r+}(X) \to \P(X \le x).
+\end{equation}
+The lattermost convergence holds for all \( x \) due to
+\begin{equation}
+	\P(X \le x) \le \E g_{r+} (X) \le P(X \le x + 1/r)
+\end{equation}
+and the right-continuity of \( F \).
+
+The \( \liminf \) side is obtained using \( g_{r-} \):
+\begin{equation}
+	\liminf_{n \ub} \P(X_n \le x) \ge \lim_{n \ub} \E g_{r-}(X_n) = \E g_{r-}(X) \to \P(X \le x),
+\end{equation}
+with the lattermost convergence being true for \( x \not \in \discont F \), since only then does
+\begin{equation}
+	\P(X \le x - 1/r) \le \E g_{r-}(X) \le \P(X \le x)
+\end{equation}
+yield the desired sandwiching.
+
+\asteriskline
+Earlier we used the following \emph{lemma}: if \( F_n \konvw F \) there exist
+variables with those distributions such that \( Y_n \konvas Y_n \).
+The common probability space is defined as usual
+\begin{equation}
+	\Omega = \cc{0,1}, \quad \mathcal F = \text{Borel sets}, \quad \P = \text{Lebesgue measure on} \cc{0,1},
+\end{equation}
+and the variables by
+\begin{equation}
+	Y_n(\omega) = \sup \vit{x \in \R \st F_n(x) < \omega}, \quad \omega \in \cc{0,1}.
+\end{equation}
+
+For proof that \( Y_n \konvas Y \) see~\cite[p.\ 118]{du}.
+
+\subsubsection{Characterizing weak convergence II (portmanteau theorem)}
+
+
+\subsubsection{Characterizing convergence in probability}
+
+\subsubsection{Continuous mapping theorems}
+Assume \( X_n \konvas X \) with \( g \) a measurable function such that
+\( \P(X \in \discont g) = 0 \). \emph{Then} \( g(X_n) \konvas g(X) \).
+This simply follows from
+\begin{equation}
+	\vit{ g(X_n) \to g(X)} \nd \vit{X_n \to X} \cap \vit{X \not \in \discont g}
+\end{equation}
+
+\asteriskline
+
+Assume \( X_n \konvd X \) with \( g \) a measurable function such that
+\( \P(X \in \discont g) = 0 \). \emph{Then} \( g(X_n) \konvd g(X) \). In particular and
+if \( g \) is bounded, \( \E g(X_n) \to \E g(X) \).
+
+Again let \( Y_n \konvas Y \). For any bounded continous \( f \) is
+\( f \circ g \) also bounded and \( \discont(f \circ g) \pd \discont g \).
+Thus \( f(g(Y_n)) \konvas f(g(Y)) \) and \( \E f(g(Y_n)) \to \E f(g(Y)) \) follows
+by the bounded convergence theorem.
+
+\asteriskline
+
+Assume \( X_n \konvp X \) with \( g \) a measurable function such that
+\( \P(X \in \discont g) = 0 \). \emph{Then} \( g(X_n) \konvp g(X) \).
+
+See~\cite[p.\ 103]{kalle}.
+Fix a subsequence \( N' \pd \N \).
+The convergence \( X_n \konvp X \)
+implies the convergence \( X_n \konvas X \) along some \( N'' \pd N' \).
+Then also \( g(X_n) \konvas g(X) \) along \( N'' \) and
+\( g(X_n) \konvas g(X) \) due to the uniqueness of the a.s.-limit. Since \( N' \) was arbitrary,
+it follows that \( g(X_n) \konvp g(X) \).
+
+\subsubsection{a.s. implies \( \P \)}
+For any \( \varepsilon > 0 \),
+\begin{align}
+	\vit{X_n \not \to X} & \nd \vit{ \abs{X_n - X} \ge \varepsilon \text{ i.o.}}                   \\
+	                     & \implies \P \ob{\abs{X_n-X} \ge \varepsilon \text{ i.o.}} = 0           \\
+	                     & \implies \sum_{n = 1}^\infty \P(\abs{X_n - X} \ge \varepsilon) < \infty \\
+	                     & \implies \lim_{n \ub} \P(\abs{X_n-X} \ge \varepsilon) = 0.
+\end{align}
+
+\subsubsection{\( \L^p \) implies \( \P \)}
+We use a Markov-type inequality
+\begin{equation}
+	\P(\abs{X_n - X} \ge \varepsilon) \le \frac{\E \abs{X_n-X}^p}{\varepsilon^p} \un.
+\end{equation}
+\asteriskline
+
+The \emph{converse} will hold if \( X_n-X \) is bounded by some \( M > 0 \), which is specifically true
+if both \( X \) and all \( X_n \) are bounded. Then
+\begin{equation}
+	\E \abs{X_n-X}^p = \E \ob{\abs {X_n-X}^p \wedge M^p } \le
+	\varepsilon \P(\abs{X_n-X} < \varepsilon) +
+	M^p \P(\abs{X_n-X} \ge \varepsilon)
+\end{equation}
+which goes to \( 0 \) as \( \varepsilon \downarrow 0 \).
+
+\subsubsection{\( \P \) implies d}
+\subsubsection{Cauchyness in probability and in \( \L^p \)}
 
 
 \subsection{Uniform integrability}
@@ -247,12 +367,43 @@ For random variables \( X, X_1, X_2, \ldots \) with \( X_n \konvd X \) we have
 	\E X_n \to \E X < \infty \iff  X_n \text{ are uniformly integrable.}
 \end{equation}
 
+\emph{\fbox { \( \Leftarrow \) }}  To get \( \E X < \infty \), we switch to \emph{bounded} functions. For all \( r > 0 \),
+\begin{equation}
+	\liminf_{n \ub} \E X_n \ge \lim_{n \ub} \E \ob{X_n \wedge r} = \E \ob{X \wedge r}
+\end{equation}
+so with \( r \ub \) we have \( \E X \le \liminf_n \E X_n < \infty  \).
 
-\subsection{Stochastic processes and finite-dimensional distributions}
+The other part follows from
+\begin{equation}
+	\abs{\E X_n - \E X}
+	\le \abs{\E X_n - \E \ob {X_n \wedge r} }
+	+ \abs{\E \ob{X_n \wedge r} - \E \ob{X \wedge r} }
+	+ \abs{\E \ob{X \wedge r} - \E X}
+\end{equation}
+for all \( r > 0 \), wherein we first let \( n \ub \) and then \( r \ub \), the uniformity being key.
+
+\emph{\fbox { \( \Rightarrow \)}}
+If \( X \) is \emph{continuous}, then \( \E(X_n \whi X_n > r) \to \E(X \whi X > r) \) by
+the continuous mapping theorem.
+
+More generally, we need to replace \( x \mapsto x \cdot 1(x > r) \) with a \( \ge \) continuous function;
+\cite{kalle} offers
+\begin{equation}
+	g(x) = x - \ug{x \wedge (r-x)_+}
+\end{equation}
+which is more nicely written as
+\( g(x) = 0 \) if \( x \le r/2 \); \( 2x-r \) if \( r/2 < x \le r \) and \( x \) otherwise. Then
+\begin{equation}
+	\E\ob{X_n \whi X_n > r} \le \E{g(X_n)} \stackrel n \rightarrow \E{g(X)} \stackrel r \rightarrow 0
+\end{equation}
+with, again, obvious uniformity in \( n \).
+
+
+% \subsection{Stochastic processes and finite-dimensional distributions}
 
 \subsection{Independence and \zerone \ laws}
 
-\subsection{Constructing random variables with given distributions}
+% \subsection{Constructing random variables with given distributions}
 
 \subsection{Notable exercises}
 \subsubsection{Asymptotics of tail-expectations}
